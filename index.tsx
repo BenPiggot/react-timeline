@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import Timeline from './Timeline';
+import AppContainer from './AppContainer';
 
-ReactDOM.render(<Timeline />, document.getElementById('react-timeline-demo'));
+ReactDOM.render(<AppContainer />, document.getElementById('react-timeline-demo'));
