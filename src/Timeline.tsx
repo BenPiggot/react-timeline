@@ -1,50 +1,58 @@
 import * as React from 'react';
-import moment from 'moment';
+import TimelineTick from './TimelineTick';
+import Panel from './Panel';
+
+import { DataObject } from '../types'
 
 import './Timeline.scss';
 
 interface TimelineProps {
-  minDate?: Date
-  maxDate?: Date
-  timespan?: number[]
+  timelineData: DataObject[]
+  title: string
 }
 
-const setTimelineDate = (year: number): Date => {
-  let date = new Date();
-  date.setFullYear(year);
-  return date;
+interface TimelineState {
+  selectedDataObjectIndex: number
 }
 
-class Timeline extends React.Component<TimelineProps, {}> {
-  public static defaultProps: TimelineProps = {
-    maxDate: setTimelineDate(2500),
-    minDate: setTimelineDate(-2000),
-    timespan: [-2000, 2500]
-  }
+
+class Timeline extends React.Component<TimelineProps, TimelineState> {
 
   constructor(props: TimelineProps) {
     super(props);
+
+    this.state = {
+      selectedDataObjectIndex: 0
+    }
+  }
+
+  selectDate = (idx) => {
+    this.setState({
+      selectedDataObjectIndex: idx
+    })
   }
 
   render() {
-    const min: number = this.props.timespan ? this.props.timespan[0] : -2000;
-    const max: number = this.props.timespan ? this.props.timespan[1] : 2500;
     return (
       <div className="app-container">
-        <h1>Timeline</h1>
+        <h1>{this.props.title}</h1>
         <div className="timeline-container">
+          <Panel 
+            selectedDataObject={this.props.timelineData[this.state.selectedDataObjectIndex]}
+          />
+          <div className="timeline-ticks-container">
           {
-            Array.from(Array(max - min + 1), (_, i) => {
-              return min + i;
-            })
-            .map(x => {
+            this.props.timelineData.map((tick, idx) => {
               return (
-                <div className="timeline-tick">
-                  {x}
-                </div>
+                <TimelineTick 
+                  dataObject={tick} 
+                  selectDate={this.selectDate}
+                  idx={idx} 
+                />
               )
             })
           }
+          </div>
         </div>
       </div>
     )
