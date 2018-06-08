@@ -9,6 +9,10 @@
     .timeline-tick {
       padding-left: 5px;
       padding-right: 5px;
+      height: 100px;
+      width: 100px;
+      display: flex;
+      align-items: flex-end;
     }
   }
 }
