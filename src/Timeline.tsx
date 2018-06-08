@@ -34,8 +34,8 @@ class Timeline extends React.Component<TimelineProps, {}> {
         <h1>Timeline</h1>
         <div className="timeline-container">
           {
-            Array.from(Array(Math.abs(min) + Math.abs(max)), (_, i) => {
-              return min + i
+            Array.from(Array(max - min + 1), (_, i) => {
+              return min + i;
             })
             .map(x => {
               return (
