@@ -31,8 +31,26 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
       selectedDataObjectIndex: idx
     })
   }
+  
+  getWidth = () => {
+    let timestamps: number[] = 
+      this.props.timelineData.map((td: DataObject) => (new Date().setFullYear(td.year)))
+      .sort()
+ 
+    let total: number = timestamps[timestamps.length - 1] - timestamps[0];
 
+    return timestamps.map((ts: number, idx: number) => {
+      if (idx < timestamps.length - 1) {
+        return (timestamps[idx + 1] - timestamps[idx]) / total;
+      }
+      else {
+        return .10;
+      }
+    });
+  }
   render() {
+    let widths: number[] = this.getWidth()
+
     return (
       <div className="app-container">
         <h1>{this.props.title}</h1>
@@ -47,7 +65,8 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
                 <TimelineTick 
                   dataObject={tick} 
                   selectDate={this.selectDate}
-                  idx={idx} 
+                  idx={idx}
+                  width={`${widths[idx] * 100}%`}
                 />
               )
             })

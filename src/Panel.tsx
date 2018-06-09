@@ -10,6 +10,7 @@ class Panel extends React.Component<PanelProps, {}> {
   render() {
     return (
       <div className="panel">
+        <h1>{this.props.selectedDataObject.year}</h1>
         <img src={this.props.selectedDataObject.image} />
       </div>
     )

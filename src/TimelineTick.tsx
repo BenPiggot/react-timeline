@@ -6,6 +6,7 @@ interface TimelineTickProps {
   dataObject: DataObject
   selectDate: (idx: number) => void
   idx: number
+  width: string
 }
 
 class TimelineTick extends React.Component<TimelineTickProps, {}> {
@@ -15,7 +16,7 @@ class TimelineTick extends React.Component<TimelineTickProps, {}> {
 
   render() { 
     return (
-      <div className="timeline-tick" onClick={this.handleClick}>
+      <div className="timeline-tick" onClick={this.handleClick} style={{width: this.props.width}}>
         {this.props.dataObject.year}
       </div>
     )
