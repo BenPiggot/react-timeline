@@ -26,7 +26,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     }
   }
 
-  selectDate = (idx) => {
+  selectDate = (idx: number): void => {
     this.setState({
       selectedDataObjectIndex: idx
     })

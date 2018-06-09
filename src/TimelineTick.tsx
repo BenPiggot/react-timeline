@@ -1,8 +1,6 @@
 import * as React from 'react';
+import { DataObject } from '../types';
 
-type DataObject = {
-  year: number
-}
 
 interface TimelineTickProps {
   dataObject: DataObject
