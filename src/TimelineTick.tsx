@@ -4,14 +4,15 @@ import { DataObject } from '../types';
 
 interface TimelineTickProps {
   dataObject: DataObject
-  selectDate: (idx: number) => void
+  selectDate: (idx: number, offset: string | null) => void
   idx: number
-  width: string
+  width?: string
+  offset?: string
 }
 
 class TimelineTick extends React.Component<TimelineTickProps, {}> {
   handleClick = () => {
-    this.props.selectDate(this.props.idx)
+    this.props.selectDate(this.props.idx, this.props.offset || null)
   }
 
   render() { 

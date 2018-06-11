@@ -5,6 +5,9 @@ import './Panel.scss';
 
 interface PanelProps {
   selectedDataObject: DataObject 
+  selectDate: (idx: number, offset: string | null) => void
+  idx: number
+  offset: string | null
 }
 
 interface PanelState {
@@ -22,16 +25,28 @@ class Panel extends React.Component<PanelProps, PanelState> {
     }
   }
 
+  handleForwardArrow = () => {
+    if (this.props.idx < 1) return;
+    this.props.selectDate(this.props.idx - 1, this.props.offset)
+  }
+
   render() {
     return (
       <div className="panel">
         <CSSTransitionGroup
           transitionName="panel-content"
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={300}
-          style={{ display: 'flex', marginLeft: '10%', marginRight: '10%' }}
-        >   
-          <div>
+          transitionEnterTimeout={600}
+          transitionLeaveTimeout={600}
+          style={{ display: 'flex', marginLeft: '5%', marginRight: '5%' }}
+        > 
+          {
+            this.props.idx > 0 ?
+              <div className="left-arrow" onClick={this.handleForwardArrow}>
+                &#60;
+              </div> : 
+              null 
+          }
+          <div >
             <h1>{this.props.selectedDataObject.year}</h1>
             <p>{this.props.selectedDataObject.description}</p>
           </div>

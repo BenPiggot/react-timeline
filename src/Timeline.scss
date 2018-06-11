@@ -3,6 +3,11 @@
   flex-direction: column;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 
+  h1.timeline-title {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
   .timeline-container {
     display: flex;
     flex-direction: column;

@@ -13,6 +13,7 @@ interface TimelineProps {
 
 interface TimelineState {
   selectedDataObjectIndex: number
+  ticksContainerStyle: React.CSSProperties
 }
 
 
@@ -22,13 +23,17 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
     super(props);
 
     this.state = {
-      selectedDataObjectIndex: 0
+      selectedDataObjectIndex: 0,
+      ticksContainerStyle: { transform: 'translate(0%)'}
     }
   }
 
-  selectDate = (idx: number): void => {
+  selectDate = (idx: number, offset: string | null): void => {
+    console.log(offset)
+    let translate: string = offset && idx > 0 ? `translate(-${offset})` : 'translate(0%)';
     this.setState({
-      selectedDataObjectIndex: idx
+      selectedDataObjectIndex: idx,
+      ticksContainerStyle: { transform: translate }
     })
   }
   
@@ -44,31 +49,66 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
         return (timestamps[idx + 1] - timestamps[idx]) / total;
       }
       else {
-        return .10;
+        return .01;
       }
     });
   }
+
+  getOffset = (widths: number[], idx: number): string => {
+    let accumulator = 0;
+    for (let i = 0; i < idx; i++) {
+      accumulator += widths[i];
+    }
+    return `${(accumulator - .03) * 100}%`;
+  }
+
   render() {
     let widths: number[] = this.getWidth()
 
     return (
       <div className="app-container">
-        <h1>{this.props.title}</h1>
+        <h1 className="timeline-title">{this.props.title}</h1>
         <div className="timeline-container">
           <Panel 
             selectedDataObject={this.props.timelineData[this.state.selectedDataObjectIndex]}
+            idx={this.state.selectedDataObjectIndex}
+            selectDate={this.selectDate}
+            offset={this.getOffset(widths, this.state.selectedDataObjectIndex > 0 ? this.state.selectedDataObjectIndex - 1 : 0)}
           />
-          <div className="timeline-ticks-container">
+          <div className="timeline-ticks-container" style={this.state.ticksContainerStyle}>
           {
             this.props.timelineData.map((tick, idx) => {
-              return (
-                <TimelineTick 
-                  dataObject={tick} 
-                  selectDate={this.selectDate}
-                  idx={idx}
-                  width={`${widths[idx] * 100}%`}
-                />
-              )
+              if (idx === 0) {
+                return (
+                  <TimelineTick
+                    dataObject={tick}
+                    selectDate={this.selectDate}
+                    idx={idx}
+                    width={`${widths[idx] * 100}%`}
+                  />
+                )
+              }
+              else if (idx < this.props.timelineData.length - 1) {
+                return (
+                  <TimelineTick 
+                    dataObject={tick} 
+                    selectDate={this.selectDate}
+                    idx={idx}
+                    width={`${widths[idx] * 100}%`}
+                    offset={this.getOffset(widths, idx)}
+                  />
+                )
+              }
+              else {
+                return (
+                  <TimelineTick
+                    dataObject={tick}
+                    selectDate={this.selectDate}
+                    idx={idx}
+                    offset={this.getOffset(widths, idx)}
+                  />
+                )
+              }
             })
           }
           </div>
