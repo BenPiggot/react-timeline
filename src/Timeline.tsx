@@ -29,7 +29,6 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
   }
 
   selectDate = (idx: number, offset: string | null): void => {
-    console.log(offset)
     let translate: string = offset && idx > 0 ? `translate(-${offset})` : 'translate(0%)';
     this.setState({
       selectedDataObjectIndex: idx,
@@ -75,6 +74,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
             max={widths.length}
             selectDate={this.selectDate}
             offset={this.getOffset(widths, this.state.selectedDataObjectIndex > 0 ? this.state.selectedDataObjectIndex - 1 : 0)}
+            forwardOffset={this.getOffset(widths, this.state.selectedDataObjectIndex < widths.length - 1 ? this.state.selectedDataObjectIndex + 1 : 0)}
           />
           <div className="timeline-ticks-container" style={this.state.ticksContainerStyle}>
           {

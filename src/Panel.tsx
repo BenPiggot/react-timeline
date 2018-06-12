@@ -9,6 +9,7 @@ interface PanelProps {
   idx: number
   max: number
   offset: string | null
+  forwardOffset: string | null
 }
 
 interface PanelState {
@@ -33,7 +34,7 @@ class Panel extends React.Component<PanelProps, PanelState> {
 
   handleForwardArrow = () => {
     if (this.props.idx >= this.props.max - 1) return;
-    this.props.selectDate(this.props.idx + 1, null)
+    this.props.selectDate(this.props.idx + 1, this.props.forwardOffset)
   }
 
   render() {
@@ -43,7 +44,7 @@ class Panel extends React.Component<PanelProps, PanelState> {
           this.props.idx > 0 ?
             <div className="left-arrow" onClick={this.handleBackArrow}>
               &#60;
-              </div> :
+            </div> :
             <div className="left-arrow">
             </div>
         }

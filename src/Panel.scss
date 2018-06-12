@@ -65,8 +65,8 @@
   }
 
   .panel-content-enter.panel-content-enter-active {
-      transform: translate(0%);
-      transition: transform 600ms linear;
+    transform: translate(0%);
+    transition: transform 600ms linear;
   }
 
   .panel-content-leave {
