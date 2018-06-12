@@ -72,6 +72,7 @@ class Timeline extends React.Component<TimelineProps, TimelineState> {
           <Panel 
             selectedDataObject={this.props.timelineData[this.state.selectedDataObjectIndex]}
             idx={this.state.selectedDataObjectIndex}
+            max={widths.length}
             selectDate={this.selectDate}
             offset={this.getOffset(widths, this.state.selectedDataObjectIndex > 0 ? this.state.selectedDataObjectIndex - 1 : 0)}
           />
